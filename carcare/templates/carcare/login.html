@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- Custom Theme files -->
+    <link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+    <link href="{% static 'css/login.css' %}" rel='stylesheet' type='text/css' />
+    <!-- Custom Theme files -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- webfonts -->
+    <link href='http://fonts.googleapis.com/css?family=Raleway:200,400,300,600,500,900,700,100,800|Comfortaa:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Comfortaa:700,300,400' rel='stylesheet' type='text/css'>
+    <!-- webfonts -->
+</head>
+<body>
+<div class="header">
+			<div class="container">
+				<!-- logo -->
+				<div class="logo">
+					<a href="index.html"><img src="{% static 'images/logo.png' %}" title="carwash" /></a>
+				</div>
+				<!-- /logo -->
+				<!-- top-nav -->
+				<div class="top-nav">
+					<span class="menu"> </span>
+					<ul>
+						<li class="active"><a href="{% url 'index' %}">Home</a></li>
+						<li><a href="{% url 'register' %}">Register</a></li>
+						<div class="clearfix"> </div>
+					</ul>
+				</div>
+				<!-- script-for-nav -->
+				<script>
+					$(document).ready(function(){
+						$("span.menu").click(function(){
+							$(".top-nav ul").slideToggle(1000);
+						});
+					});
+				</script>
+				<!-- script-for-nav -->
+				<!-- /top-nav -->
+				<div class="clearfix"> </div>
+			</div>
+			<!-- /header -->
+		</div>
+<div class="sidenav">
+
+         <div class="login-main-text">
+            <h2>Application<br> Login Page</h2>
+            <p>Login or register from here to access.</p>
+         </div>
+      </div>
+      <div class="main">
+         <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+               <form action="{% url 'login' %}" method="post">
+                   {% csrf_token %}
+
+                  <div class="form-group">
+                     <label>User Name</label>
+                     <input type="text" class="form-control" placeholder="User Name" name="username">
+                  </div>
+                  <div class="form-group">
+                     <label>Password</label>
+                     <input type="password" class="form-control" placeholder="Password" name="password">
+                  </div>
+                   {% if error %}
+                    <span style="color: red;">{{ error }}</span><br>
+                   {% endif %}
+                  <input type="submit" value="LOGIN" class="btn btn-primary">
+                   <input type="button" value="Register" class="btn btn-secondary" onclick="window.location = '{% url 'register' %}'">
+
+               </form>
+            </div>
+         </div>
+      </div>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration ลงทะเบียน</title>
+    <link href="{% static 'css/bootstrap.css' %}" rel='stylesheet' type='text/css' />
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <!-- Custom Theme files -->
+    <link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+    <!-- Custom Theme files -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+    <!-- webfonts -->
+    <link href='http://fonts.googleapis.com/css?family=Raleway:200,400,300,600,500,900,700,100,800|Comfortaa:700' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Comfortaa:700,300,400' rel='stylesheet' type='text/css'>
+    <!-- webfonts -->
+</head>
+<body class="override">
+    <nav class="navbar navbar-inverse" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="{% url 'index' %}">Web Carcare</a>
+            </div>
+
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'register' %}">Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row">
+            <div class="container">
+                <form action="{% url 'register' %}" method="post">
+                    {% csrf_token %}
+                    <div class="col-md-8 col-md-offset-2">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Register</div>
+                            <div class="panel-body">
+                                {% if error_message %}
+                                    <p class="bg-danger p-d ml-b">{{ error_message }}</p>
+                                {% endif %}
+
+                                <div class="form-group clearfix">
+                                    <label for="{{ form.username.id_for_label }}" class="col-md-4 control-label text-right">Username<span class="text-red">*</span>:</label>
+                                    <div class="col-md-6">
+                                        {{ form.username }}
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label for="{{ form.email.id_for_label }}" class="col-md-4 control-label text-right">Email<span class="text-red">*</span>:</label>
+                                    <div class="col-md-6">
+                                        {{ form.email }}
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label for="{{ form.password.id_for_label }}" class="col-md-4 control-label text-right">Password<span class="text-red">*</span>:</label>
+                                    <div class="col-md-6">
+                                        {{ form.password }}
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label for="{{ form.password_repeat.id_for_label }}" class="col-md-4 control-label text-right">Confirm password:</label>
+                                    <div class="col-md-6">
+                                        {{ form.password_repeat }}
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label for="{{ form.first_name.id_for_label }}" class="col-md-4 control-label text-right">First Name:</label>
+                                    <div class="col-md-6">
+                                        {{ form.first_name }}
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label for="{{ form.last_name.id_for_label }}" class="col-md-4 control-label text-right">Last Name:</label>
+                                    <div class="col-md-6">
+                                        {{ form.last_name }}
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label for="{{ form.phone_number.id_for_label }}" class="col-md-4 control-label text-right">Phone Number:</label>
+                                    <div class="col-md-6">
+                                        {{ form.phone_number }}
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-md-offset-4">
+                                    <input type="submit" value="Register" class="btn btn-success">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row well ml-t">
+                <div class="col-lg-8 col-md-8">
+                    <h4>Developed by: <a href="https://carlofontanos.com" target="_blank">Carl Victor C. Fontanos</a></h4>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <p class="m-t">Copyright &copy <a href="https://carlofontanos.com" target="_blank">www.carlofontanos.com</a> 2017</p>
+                    <p>All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

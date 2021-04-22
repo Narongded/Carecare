@@ -1,0 +1,867 @@
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+License: Creative Commons Attribution 3.0 Unported
+License URL: http://creativecommons.org/licenses/by/3.0/
+-->
+<!DOCTYPE HTML>
+{% load static %}
+<html>
+	<head>
+        <meta charset="UTF-8">
+		<title>Carwash Website Template | Services :: w3layouts</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+{#		<link href="{% static 'css/bootstrap.css' %}" rel='stylesheet' type='text/css' />#}
+{#        <script src="{% static 'js/jquery.min.js' %}"></script>#}
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+		 <!-- Custom Theme files -->
+		<link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' />
+   		 <!-- Custom Theme files -->
+   		  <meta name="viewport" content="width=device-width, initial-scale=1">
+		 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+   		 <!-- webfonts -->
+   		 <link href='http://fonts.googleapis.com/css?family=Raleway:200,400,300,600,500,900,700,100,800|Comfortaa:700' rel='stylesheet' type='text/css'>
+   		 <link href='http://fonts.googleapis.com/css?family=Comfortaa:700,300,400' rel='stylesheet' type='text/css'>
+   		  <!-- webfonts -->
+          <!-- test -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/css/tempusdominus-bootstrap-4.min.css" integrity="sha256-XPTBwC3SBoWHSmKasAk01c08M6sIA5gF5+sRxqak2Qs=" crossorigin="anonymous" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.1.2/js/tempusdominus-bootstrap-4.min.js" integrity="sha256-z0oKYg6xiLq3yJGsp/LsY9XykbweQlHl42jHv2XTBz4=" crossorigin="anonymous"></script>
+
+  </head>
+        <!-- test -->
+        <style>
+            .errorlist{
+                color: red;
+            }
+        </style>
+	</head>
+	<body>
+		<!-- container -->
+		<!-- header -->
+		<div class="header">
+			<div class="container">
+				<!-- logo -->
+				<div class="logo">
+					<a href="{% url 'index' %}"><img src="{% static 'images/logo.png' %}" title="carwash" /></a>
+				</div>
+				<!-- /logo -->
+				<!-- top-nav -->
+				<div class="top-nav">
+					<span class="menu"> </span>
+					<ul>
+						<li class="active"><a href="{% url 'index' %}">หน้าแรก</a></li>
+                        <li><a href="{% url 'status' %}">สถานะการบริการ</a></li>
+						<li><a href="{% url 'about' %}">เกี่ยวกับ</a></li>
+                        <li>{% if user.is_authenticated %}<a href="{% url 'delivery' %}">Delivery</a>{% endif %}</li>
+                        <li>{% if user.is_authenticated %}<a href="{% url 'update' %}">การจองของท่าน</a>{% endif %}</li>
+                        <li>{% if user.is_anonymous %}<a href="{% url 'login' %}">Login</a>{% endif %}</li>
+                        <li>{% if user.is_authenticated %}<a href="{% url 'logout' %}">Logout</a>{% endif %}</li>
+                        <li>{% if user.is_anonymous %}<a href="{% url 'register' %}">ลงทะเบียน</a>{% endif %}</li>
+						<div class="clearfix"> </div>
+					</ul>
+				</div>
+				<!-- /top-nav -->
+				<!-- script-for-nav -->
+				<script>
+					$(document).ready(function(){
+						$("span.menu").click(function(){
+							$(".top-nav ul").slideToggle(1000);
+						});
+					});
+				</script>
+				<!-- script-for-nav -->
+				<div class="clearfix"> </div>
+			</div>
+			<!-- /header -->
+		</div>
+					<!-- Services -->
+					<div class="services">
+						<div class="container">
+                            <form method="post" action="{% url 'reservation' %}">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <input type="submit" value="CREATE RESERVATION" class="btn btn-primary">
+                                <!-- Button trigger modal -->
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myModal">
+                                  อัตราค่าบริการ
+                                </button>
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#myLargeModal">
+                                    ประเภทรถยนต์ของท่าน
+                                </button>
+
+                                <div class="modal fade" id="myLargeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true"
+                                style="padding-right: 16px;">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content" style="overflow: hidden;">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">อัตราค่าบริการ</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body" style="max-height: 592px; overflow-y: auto;">
+                                        <table id="fixTable" class="table table-border table--data text-center">
+                                            <colgroup>
+                                                <col>
+                                                <col class="bg-gray">
+                                                <col>
+                                                <col class="bg-gray">
+                                                <col>
+                                                <col class="bg-gray">
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <th>ยี่ห้อรถ</th>
+                                                    <th>S</th>
+                                                    <th>M</th>
+                                                    <th>L</th>
+                                                    <th>XL</th>
+                                                    <th>XXL</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="4" class="title">HONDA</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>BRIO</td>
+                                                    <td>CIVIC</td>
+                                                    <td>ACCORD</td>
+                                                    <td>CRV</td>
+                                                    <td>ODYSSEY</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>CITY</td>
+                                                    <td>HRV</td>
+                                                    <td>FREED</td>
+                                                    <td>STREAM</td>
+                                                    <td>STEPWGN</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>JAZZ</td>
+                                                    <td></td>
+                                                    <td>MOBILIO</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="7" class="title">TOYOTA</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>YARIS</td>
+                                                    <td>ALMERA</td>
+                                                    <td>CAMRY</td>
+                                                    <td>AVANZA</td>
+                                                    <td>ALPHARD</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>VIOS</td>
+                                                    <td>ALTIS</td>
+                                                    <td></td>
+                                                    <td>HARRIER</td>
+                                                    <td>COMMUTER</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>PRIUS</td>
+                                                    <td></td>
+                                                    <td>PRADO</td>
+                                                    <td>ESTIMA</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>WISH</td>
+                                                    <td>GRANVIA</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>HIACE</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>VENTURY</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="3" class="title">FORD</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>FIESTA</td>
+                                                    <td>ECOSPORT</td>
+                                                    <td>ESCAPE</td>
+                                                    <td>EVEREST</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>FOCUS</td>
+                                                    <td></td>
+                                                    <td>RANGER</td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="3" class="title">MAZDA</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>MAZDA-2</td>
+                                                    <td>MAZDA-3</td>
+                                                    <td>CX-5</td>
+                                                    <td>BT-50</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>MX5</td>
+                                                    <td>CX-3</td>
+                                                    <td></td>
+                                                    <td>CX-9</td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="3" class="title">MITSUBISHI</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>MIRAGE</td>
+                                                    <td>EVO</td>
+                                                    <td></td>
+                                                    <td>PAJERO</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>LANCER</td>
+                                                    <td></td>
+                                                    <td>TRITON</td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="5" class="title">NISSAN</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>MARCH</td>
+                                                    <td>ALMERA</td>
+                                                    <td>JUCK</td>
+                                                    <td>MURANO</td>
+                                                    <td>ELEGRAND</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>LEAF</td>
+                                                    <td>PULSAR</td>
+                                                    <td>LIVINA</td>
+                                                    <td>X-TRAIL</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>SYLPHY</td>
+                                                    <td>TEANA</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>TIIDA</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="title">รถกระบะ</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td colspan="100%">ทุกรุ่นขึ้นอยู่กับขนาดรถ</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="5" class="title">AUDI</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>A1</td>
+                                                    <td>A5</td>
+                                                    <td>A8</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>A3</td>
+                                                    <td>A6</td>
+                                                    <td>Q7</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Q3</td>
+                                                    <td>Q5</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>T1</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="title">BENTLEY</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td colspan="100%">ทุกรุ่น</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="8" class="title">BMW</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>SERIES-1</td>
+                                                    <td>SERIES-5</td>
+                                                    <td>S7</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>SERIES-2</td>
+                                                    <td>X3</td>
+                                                    <td>X5</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>SERIES-3</td>
+                                                    <td></td>
+                                                    <td>X6</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>SERIES-4</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>X1</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Z3</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>Z4</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="4" class="title">CHEVROLET</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>AVEO</td>
+                                                    <td>CRUZE</td>
+                                                    <td>SPIN</td>
+                                                    <td>CAPTIVA</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>SONIC</td>
+                                                    <td></td>
+                                                    <td>ZAFIRA</td>
+                                                    <td colspan="100%">COLORADO</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td colspan="100%">TRAILBLAZER</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="title">FERRARI</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td colspan="100%">ทุกรุ่น</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="3" class="title">HYUNDAI</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>VELOSTER</td>
+                                                    <td>ELANTRA</td>
+                                                    <td>SONATA</td>
+                                                    <td>TUCSON</td>
+                                                    <td>H1</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>STAREX</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="title">LAMBORGHINI</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td colspan="100%">ทุกรุ่น</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="4" class="title">LEXUS</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>CT</td>
+                                                    <td>ES</td>
+                                                    <td>LS</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>IS</td>
+                                                    <td>GS</td>
+                                                    <td>RX</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>NX</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="7" class="title">MERCEDES BENZ</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>A-CLASS</td>
+                                                    <td>E-CLASS</td>
+                                                    <td>G-CLASS</td>
+                                                    <td>R-CLASS</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>B-CLASS</td>
+                                                    <td>GLC</td>
+                                                    <td>M-CLASS</td>
+                                                    <td>SPRINTER</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>C-CLASS</td>
+                                                    <td>GLE</td>
+                                                    <td>S-CLASS</td>
+                                                    <td>VITO</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>CLA</td>
+                                                    <td></td>
+                                                    <td>CLS</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>GLA</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>SLK</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="4" class="title">MINI</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>CLASSIC</td>
+                                                    <td>COUNTRYMAN</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>COOPER</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>COUPE</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="4" class="title">PORSCHE</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>BOXTER</td>
+                                                    <td>911</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>CAYMAN</td>
+                                                    <td>CAYENNE</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>MACAN</td>
+                                                    <td colspan="100%">PANAMERA</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="4" class="title">PROTON</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>NE-O</td>
+                                                    <td>GEN-2</td>
+                                                    <td>EXORA</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>SAVVY</td>
+                                                    <td>PREVÉ</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td>SUPREMA-S</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="title">ROLLS-ROYCE</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td colspan="100%">ทุกรุ่น</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="3" class="title">SUZUKI</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>SWIFT</td>
+                                                    <td>CIAZ</td>
+                                                    <td></td>
+                                                    <td>ERTIGA</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>CELERIO</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td rowspan="4" class="title">VOLVO</td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>S60</td>
+                                                    <td>S80</td>
+                                                    <td>XC90</td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>V40</td>
+                                                    <td>XC60</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                    <td>V60</td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">อัตราค่าบริการ</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        <table class="table table--data table-hover table--price text-center">
+                                            <colgroup>
+                                                <col></col>
+                                                <col class="bg-gray"></col>
+                                                <col></col>
+                                                <col class="bg-gray"></col>
+                                            </colgroup>
+                                            <thead>
+                                                <tr>
+                                                    <th data-model="data-column-0">อัตราค่าบริการ</th>
+                                                    <th width="15%">ขนาดรถ</th>
+                                                    <th width="15%">Wash Pro</th>
+                                                    <th width="15%">Green Wash</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td data-model="data-column-0">บริการล้างสี + ดูดฝุ่น</td>
+                                                    <td>S</td>
+                                                    <td class="price">180</td>
+                                                    <td class="price">150</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>M</td>
+                                                    <td class="price">200</td>
+                                                    <td class="price">180</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>L</td>
+                                                    <td class="price">220</td>
+                                                    <td class="price">200</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>XL</td>
+                                                    <td class="price">250</td>
+                                                    <td class="price">230</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>XXL</td>
+                                                    <td class="price">300</td>
+                                                    <td class="price">250</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td data-model="data-column-0">บริการเคลือบสีด้วย Quick Wax</td>
+                                                    <td>S</td>
+                                                    <td class="price">280</td>
+                                                    <td class="price">250</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>M</td>
+                                                    <td class="price">300</td>
+                                                    <td class="price">280</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>L</td>
+                                                    <td class="price">320</td>
+                                                    <td class="price">300</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>XL</td>
+                                                    <td class="price">350</td>
+                                                    <td class="price">320</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>XXL</td>
+                                                    <td class="price">450</td>
+                                                    <td class="price">400</td>
+                                                </tr>
+                                            </tbody>
+                                            <tbody>
+                                                <tr>
+                                                    <td data-model="data-column-0">บริการเคลือบสีด้วย Meguiar’s Synthetic Sealant 2.0 (เบอร์ 21)</td>
+                                                    <td>S</td>
+                                                    <td class="price">600</td>
+                                                    <td class="price">500</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>M</td>
+                                                    <td class="price">700</td>
+                                                    <td class="price">600</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>L</td>
+                                                    <td class="price">800</td>
+                                                    <td class="price">700</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>XL</td>
+                                                    <td class="price">900</td>
+                                                    <td class="price">800</td>
+                                                </tr>
+                                                <tr>
+                                                    <td data-model="data-column-0"></td>
+                                                    <td>XXL</td>
+                                                    <td class="price">1,100</td>
+                                                    <td class="price">1,000</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                            </form>
+						</div>
+					</div>
+					<!-- Services -->
+							<!-- team-grids-caption -->
+							<div class="team-grids-caption">
+								<div class="container">
+									<div class="team-grids-caption-left">
+										<h4>About Carwath Center</h4>
+										<p>งามวงศ์วานคาร์แคร์ ศูนย์ซ่อมมาตรฐานบริการเคาะพ่นสีตัวถังรถยนต์ ดำเนินการมากว่า25ปี ภายใต้การบริหารงานของคุณประสิทธิ์ ยึดหลักคุณภาพการจัดซ่อมที่ดี ดำรงมาตรฐานภายใต้ความซื่อสัตย์”</p>
+									</div>
+									<div class="team-grids-caption-right">
+										<a class="team-btn" href="{% url 'about' %}">ReadMore</a>
+									</div>
+									<div class="clearfix"> </div>
+								</div>
+							</div>
+							<!-- team-grids-caption -->
+							<!-- /team-grids -->
+						</div>
+					</div>
+					<!-- /team -->
+					<!-- footer -->
+					<div class="footer">
+						<div class="container">
+							<div class="footer-grids">
+								<div class="col-md-6">
+									<div class="footer-grid">
+										<h5>ที่่อยู่ของร้าน</h5>
+										<p>39/5 ม.3 ต.ตลาดขวัญ อ.เมือง จ.นนทบุรี ต.ตลาดขวัญ อ.เมือง จ.นนทบุรี</p>
+										<p> 02-527-3716, 02-969-0489-90</p>
+									</div>
+								</div>
+
+								<div class="col-md-6">
+									<div class="footer-grid f-gallery">
+										<h5>Form the Gallery</h5>
+										<div class="f-gallery-grids">
+											<div class="f-gallery-grid">
+												<ul>
+													<li><a href="#"><img src="{% static 'images/shop1.jpg' %}" title="name" /></a></li>
+													<li><a href="#"><img src="{% static 'images/shop2.jpg' %}" title="name" /></a></li>
+                                                    <li><a href="#"><img src="{% static 'images/shop3.jpg' %}" title="name" /></a></li>
+													<div class="clearfix"> </div>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="clearfix"> </div>
+							</div>
+						</div>
+					</div>
+					<!-- /footer -->
+					<!-- footer-bottom -->
+					<div class="footer-bottom">
+						<div class="container">
+							<div class="footer-bottom-left">
+								<p>Social Contact</p>
+							</div>
+							<div class="footer-bottom-right">
+								<ul>
+									<li><a href="#">Facebook</a></li>
+									<li><a href="#">Twitter</a></li>
+									<li><a href="#">Google+</a></li>
+								</ul>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+					</div>
+					<!-- footer-bottom -->
+					<!-- footer-bottom -->
+		</div>
+		<!-- /container -->
+	</body>
+</html>
+
